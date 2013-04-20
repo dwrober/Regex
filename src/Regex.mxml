@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			[Bindable] private var pattern:RegExp;
+			[Bindable] private var code:String;
+			[Bindable] private var isMatch1:Boolean = false;
+			[Bindable] private var isMatch2:Boolean = false;
+			[Bindable] private var isMatch3:Boolean = false;
+			[Bindable] private var isMatch4:Boolean = false;
+			[Bindable] private var isMatch5:Boolean = false;
+			
+			private function change():void
+			{
+				pattern = new RegExp(regex.text);
+				code = "var pattern:RegExp = new RegExp(" + pattern.toString() + ")";
+				checkStrings();
+			}
+			
+			private function checkStrings():void
+			{
+				pattern.exec(testString1.text) == null ? isMatch1 = false : isMatch1 = true;
+				pattern.exec(testString2.text) == null ? isMatch2 = false : isMatch2 = true;
+				pattern.exec(testString3.text) == null ? isMatch3 = false : isMatch3 = true;
+				pattern.exec(testString4.text) == null ? isMatch4 = false : isMatch4 = true;
+				pattern.exec(testString5.text) == null ? isMatch5 = false : isMatch5 = true;
+			}
+			
+			private function showSimplePhoneNumberRegexp():void
+			{
+				regex.text = '\\d{3}\-\\d{3}\-\\d{4}';
+				testString1.text = "303-987-6543";
+				testString2.text = "303-987-654";
+				change();
+			}
+			
+			private function clear():void
+			{
+				regex.text = "";
+				testString1.text = "";
+				testString2.text = "";
+				change();
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:VBox width="100%">
+		
+		<s:Form width="100%" >
+			<s:FormItem label="RegEx String" width="100%" >
+				<s:TextInput id="regex" change="change()" width="100%"/>
+			</s:FormItem>
+			<s:FormItem width="100%" >
+				<s:TextInput text="{code}" width="100%"/>
+			</s:FormItem>
+			<s:FormItem label="Test String 1" width="100%" >
+				<s:TextInput id="testString1" change="change()" width="100%"/>
+				<s:HGroup>
+					<s:Label visible="{isMatch1}" color="green" fontWeight="bold" text="Good!"/>
+					<s:Label visible="{!isMatch1}" color="red" fontWeight="bold" text="Not a match!"/>
+				</s:HGroup>
+			</s:FormItem>
+			<s:FormItem label="Test String 2" width="100%" >
+				<s:TextInput id="testString2" change="change()" width="100%"/>
+				<s:HGroup>
+					<s:Label visible="{isMatch2}" color="green" fontWeight="bold" text="Good!"/>
+					<s:Label visible="{!isMatch2}" color="red" fontWeight="bold" text="Not a match!"/>
+				</s:HGroup>
+			</s:FormItem>
+			<s:FormItem label="Test String 3" width="100%" >
+				<s:TextInput id="testString3" change="change()" width="100%"/>
+				<s:HGroup>
+					<s:Label visible="{isMatch3}" color="green" fontWeight="bold" text="Good!"/>
+					<s:Label visible="{!isMatch3}" color="red" fontWeight="bold" text="Not a match!"/>
+				</s:HGroup>
+			</s:FormItem>
+			<s:FormItem label="Test String 4" width="100%" >
+				<s:TextInput id="testString4" change="change()" width="100%"/>
+				<s:HGroup>
+					<s:Label visible="{isMatch4}" color="green" fontWeight="bold" text="Good!"/>
+					<s:Label visible="{!isMatch4}" color="red" fontWeight="bold" text="Not a match!"/>
+				</s:HGroup>
+			</s:FormItem>
+			<s:FormItem label="Test String 5" width="100%" >
+				<s:TextInput id="testString5" change="change()" width="100%"/>
+				<s:HGroup>
+					<s:Label visible="{isMatch5}" color="green" fontWeight="bold" text="Good!"/>
+					<s:Label visible="{!isMatch5}" color="red" fontWeight="bold" text="Not a match!"/>
+				</s:HGroup>
+			</s:FormItem>
+			<s:FormItem label="Examples" >
+				<s:HGroup>
+					<s:Button label="Simple Phone Number" click="showSimplePhoneNumberRegexp()"/>
+					<s:Button label="Clear" click="clear()"/>
+				</s:HGroup>
+			</s:FormItem>
+		</s:Form>
+	</mx:VBox>
+</s:Application>
